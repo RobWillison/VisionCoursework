@@ -17,7 +17,11 @@ MxMy = filter2(templateMean, imMean);
 XY = filter2(template, im);
 \end{figure}
 
-Once these four correlations
+Once these four correlations are computed they can be combined to give the values
+for the top of the normalised correlation equation. The next step is to divide
+this by the standard deviation of the template and area of the image under the
+template. The standard deviation of the template can be computed simply using
+std().
 
 
 \begin{figure}
@@ -32,7 +36,7 @@ $r=\frac{(x-m_x1)^T(y-m_y1)}{|x-m_x1||y-m_x1|}$
 
 Face Detection
 Normal -
-Normalised Corr - 40.81\%
+Normalised Corr - 13.64\%
 Normalised Corr with Guass - 41.03\%
 Normalised Corr with Colour - 51.95\%
 Normalised Corr with edge det - 46.57\%
