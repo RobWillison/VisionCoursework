@@ -8,7 +8,16 @@ The normalised correlation is defined as shown in figure as $(x-m_x1)$ is simply
 the vectorised template minus its mean this can be precalculated as it does not
 change as the templed in convolved. The $(x-m_x1)^T(y-m_y1)$ can be expanded into
 four seperate terms $x^Ty - m_x1^Ty - x^Tm_y + m_x^Tm_y$ each which can be computed
-using a correlation. After this the result can be divided by $|x-m_x1||y-m_x1|$.
+using a correlation. These four correlations are shown in figure ??, below.
+
+\begin{figure}
+MxY = filter2(templateMean, im);
+XMy = filter2(template, imMean);
+MxMy = filter2(templateMean, imMean);
+XY = filter2(template, im);
+\end{figure}
+
+Once these four correlations
 
 
 \begin{figure}
