@@ -1,0 +1,50 @@
+%Get training data
+% https://jeremykun.com/2011/07/27/eigenfaces/
+imc = double(imread('../data/facedata.png'))/255;
+
+facesArray = zeros(20 * 32, 1024);
+class = []
+trainingNum = 1;
+for person = 0:19
+    for face = 0:31
+        rect = floor([face * 64 + 1 person * 64 + 1 64 64]);
+        faceimg = imc(rect(2):(rect(2)+rect(4)-1), rect(1):(rect(1)+rect(3)-1), :);
+        faceimg = mean(faceimg, 3);
+        faceimg = faceimg - mean(faceimg(:)); % subtract mean and divide standard deviation
+        faceimg = faceimg / std(faceimg(:));
+        faceimg = imresize(faceimg, [32 32]);
+        facesArray(trainingNum, :) = faceimg(:);
+        trainingNum = trainingNum + 1;
+        class = [class person + 1];
+    end;
+end;
+
+averageFace = sum(facesArray);
+
+trainingNum = 1;
+for person = 1:20
+    for face = 1:32
+        facesArray(trainingNum, :) = facesArray(trainingNum, :) - averageFace;
+        trainingNum = trainingNum + 1;
+    end;
+end;
+
+covariance = facesArray' * facesArray;
+[eigVecs, Diag] = eig(covariance);
+
+eigenValues = eig(covariance);
+
+eigenValues = eigenValues(end:-1:1);
+eigVecs = fliplr(eigVecs);
+
+%values between 0 and 1
+eigFaces = eigVecs(:, 1);
+eigFaces = eigFaces - norm(eigFaces(:));
+eigFaces = eigFaces ./ max(eigFaces(:));
+
+
+averageFace = reshape(averageFace, 32, 32);
+
+reshape(eigVecs(:, 1), 32, 32)
+
+figure; imshow(reshape(eigFaces(:, 1), 32, 32));
