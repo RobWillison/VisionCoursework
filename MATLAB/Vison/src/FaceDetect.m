@@ -6,7 +6,7 @@ imc = double(imread('../data/g20.jpg'))/255;
 
 % Extract features from image
 disp('[ Extracting features ]');
-imc = mean(imc, 3); % greyscale image for now
+% imc = mean(imf, 3); % greyscale image for now
 getrect = [1 1 300 300];
 % Select a region for template matching
 selectRegion = 0;
@@ -15,31 +15,35 @@ if (selectRegion)
     fh = figure; imshow(imc);
     rect = floor(getrect);
     template = imf(rect(2):(rect(2)+rect(4)-1), rect(1):(rect(1)+rect(3)-1), :);
+    template = mean(template, 3);
     close(fh);
 else
 % use fixed image
     imt = double(imread('../data/obama.png'))/255;  
     imt = imresize(imt, [33 33]);
     template = imt;
-%    template = mean(template, 3);
+    template = ImageColorFilter(template);
+    template = mean(template, 3);
 end;
 
 % Compute normalised correlation of template with image
 disp('[ Filtering with template ]');
-% imcFilter = ImageColorFilter(imc);
-% imcFilter = mean(imcFilter, 3);
-%imcEdge = EdgeDetection(imc);
-%templateEdge = EdgeDetection(template);
+
+imc = ImageColorFilter(imc);
+imc = mean(imc, 3);
+% imcEdge = EdgeDetection(imc);
+% templateEdge = EdgeDetection(template);
 
 % TODO: implement the following function
 
 %try blurring the template and image
-template = imgaussfilt(template, 2);
+% template = imgaussfilt(template, 2);
 
 % imc = imgaussfilt(imc, 2);
 %figure; imshow(im)
 
 resp = NormalisedCorrelation(imc, template);
+
 %resp = DetectFacesVJ(imc);
 
 % Find local maxima with non-max suppression 
