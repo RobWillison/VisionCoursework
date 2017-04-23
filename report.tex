@@ -193,7 +193,7 @@ are more positive detections.
 \subsection{Harr Features}
 
 The final detection technique which was tried was to move away from using a convolution
-of a template image and to use Harr features like the Viola-Jones algorithm does \ref{viola2004robust}.
+of a template image and to use Harr features like the Viola-Jones algorithm does \cite{viola2004robust}.
 The Viola-Jones algorithm uses a cascade of simple classifiers using a Harr feature
 to detect faces. Therefore the use of a set Harr features to detect an face should yeild
 an improved overlap with the Viola-Jones algorithm.\\
@@ -266,7 +266,7 @@ left most image in figure \ref{fig:eigenface}. The eigen faces are then computed
 by eigen value decomposition, each of the training images is placed in a M x N
 matrix where M is the number of images and N there vectorised length. The convolution
 matrix of this is then computed giving a N x N matrix, the eigen vectors of this
-are the eigen faces \ref{fig:eigenface}. Each eigen face is normalised between 0 and 1. The first
+are the eigen faces \cite{eigface}. Each eigen face is normalised between 0 and 1. The first
 five eigen faces are shown in figure \ref{fig:eigenface}.\\
 
 \begin{figure}[H]

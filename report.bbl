@@ -1,11 +1,22 @@
 \begin{thebibliography}{1}
 
+\bibitem{eigface}
+{\sc {j2kun}}.
+\newblock {Eigenfaces, for Facial Recognition}.
+\newblock \url{https://jeremykun.com/2011/07/27/eigenfaces/}, 2011.
+
 \bibitem{stddev}
 {\sc {Matlab Tricks}}.
 \newblock {Calculate standard deviation using minimal memory}.
 \newblock
   \url{http://matlabtricks.com/post-19/calculating-standard-deviation-using-minimal-memory},
   2013.
+
+\bibitem{viola2004robust}
+{\sc Viola, P., and Jones, M.~J.}
+\newblock Robust real-time face detection.
+\newblock {\em International journal of computer vision 57}, 2 (2004),
+  137--154.
 
 \bibitem{crosscor}
 {\sc {Wikipedia}}.
