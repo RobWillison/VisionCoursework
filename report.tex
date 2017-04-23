@@ -1,66 +1,227 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{url}
+\usepackage[numbers]{natbib}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+
 \begin{document}
+
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},
+}
 
 \section{Requirement 1 : Correlation Detector}
 
-\subsection{Normalised Correlation}
+Simple correlation can be performed using a correlation of the template and image,
+all tests in this report used the obama.png as the template image. The results of
+using a simple correlation can be seen in figure \ref{fig:simplecor}. As can be
+seen this results is significant numbers of false positive detections, expecially
+in the flag section above the rows of people. Also many detections only cover half
+of a face.\\
 
-The normalised correlation is defined as shown in figure as $(x-m_x1)$ is simply
-the vectorised template minus its mean this can be precalculated as it does not
-change as the templed in convolved. The $(x-m_x1)^T(y-m_y1)$ can be expanded into
-four seperate terms $x^Ty - m_x1^Ty - x^Tm_y + m_x^Tm_y$ each which can be computed
-using a correlation. These four correlations are shown in figure ??, below.
-
-\begin{figure}
-MxY = filter2(templateMean, im);
-XMy = filter2(template, imMean);
-MxMy = filter2(templateMean, imMean);
-XY = filter2(template, im);
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{simpleCor.jpg}
+  \caption{Results of using Simple Correlation on g20 image}
+  \label{fig:simplecor}
 \end{figure}
 
-Once these four correlations are computed they can be combined to give the values
-for the top of the normalised correlation equation. The next step is to divide
-this by the standard deviation of the template and area of the image under the
-template. The standard deviation of the template can be computed simply using
-std().
+To improve this a normalised correlation technique was implemented. The normalised correlation
+is defined in the coursework specification and is shown in figure \ref{fig:normcoreq} for reference.
+This can be simplified in a series of steps to make use of correlations in order to
+improve performance. Firstly the value of $x - m_x1$ can be precomputed as this is
+simple the template minus its mean. Next the numerator of the fraction can be simplified
+to $xy + m_x1m_y1 - xm_y1 - ym_x1$, each of these four terms can then be computed
+using a correlation. These four correlations are shown in figure \ref{fig:numerator}
+where tempalate and image are the vectorised image and template and templateMean is
+the mean of the template and imageMean is a matrix of the mean values at each tempalte
+location, computed using another correlation with a template of values 1/1024 where
+the template size is 32 x 32.\\
 
-
-\begin{figure}
+\begin{figure}[H]
+\begin{center}
 $r=\frac{(x-m_x1)^T(y-m_y1)}{|x-m_x1||y-m_x1|}$
+\end{center}
+\caption{Normalised Correlation}
+\label{fig:normcoreq}
 \end{figure}
 
-\section{Requirement 2}
+\begin{figure}[H]
+\begin{lstlisting}
+MxY = filter2(templateMean, image);
+XMy = filter2(template, imageMean);
+MxMy = filter2(templateMean, imageMean);
+XY = filter2(template, image);
+\end{lstlisting}
+\caption{Numerator Compute Code}
+\label{fig:numerator}
+\end{figure}
+
+Now the numerator of the normalised correlation is computed we can turn to the
+denominator. The denominator of the normalised correlation equation is the
+standard deviation of the tempalte and part of the image under the template \cite{crosscor}.
+The standard deviation of the template can be computed simply. For the part of the
+image under the template correlations can be used. The standard deviation can be
+rearranged to the equation shown in figure \ref{fig:normcoreq} where n is the
+number of pixels under the template, q is the squared sum of the pixels under the
+template and s is the sum of the pixels under the tempalte \cite{stddev}. This can
+be computed using another three correlations to compute n, q and s as shown in
+figure \ref{fig:stddeccode} where the template is of size 32 x 32.\\
+
+\begin{figure}[H]
+\begin{center}
+$r=\frac{1}{n - 1}(q - \frac{s^2}{n})$
+\end{center}
+\caption{Standard Deviation}
+\label{fig:normcoreq}
+\end{figure}
+
+\begin{figure}[H]
+\begin{lstlisting}[language=matlab]
+n = filter2(ones(size(32, 32), ones(32, 32), 'same');
+
+imSquared = im .^2;
+q = filter2(ones(32, 32), imSquared, 'same');
+
+s = filter2(32, 32, image, 'same');
+
+imStdDev = (q - ((s .^ 2) ./ n) ./ (n - 1));
+
+imStdDev = sqrt(imStdDev);
+\end{lstlisting}
+\caption{Standard Deviation matlab}
+\label{fig{fig:stddeccode}}
+\end{figure}
+
+Using the normalised correlation the output of the face detection using obama.png
+as the template is shown in figure \ref{fig:normalisedcor}. As can be seen there
+is still a high number of false detections in the background of the image as well
+as in the tie area of some people. The next section will try and address these issues
+with an improved detector.\\
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{normalisedCor.jpg}
+  \caption{Results of using Normalised Correlation on g20 image}
+  \label{fig:normalisedcor}
+\end{figure}
+
+\section{Requirement 2 : Improved Detector}
+
+The original normalised correlation detector achieves 27\% overlap with the Viola-Jones
+face detection algorithm and this will be used as the performance measures for
+the improvements demonstrated in this section.\\
+
+\subsection{Guassian Blur}
+
+One improvement which was tried was to add a Gaussian blur using a correlation of
+a Gaussian template. The idea here was to remove some of the fine grain detain and
+high frequencies in the template image as these high frequencies may be causing
+some of the missed faces. This did increase the overlap to 29\% the result can
+be seen in figure \ref{fig:blurred}. The number of correctly detected faces is
+improved however there are still high numbers of false positives.\\
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{blurred.jpg}
+  \caption{Results of using Normalised Correlation and Guassian Blur on g20 image}
+  \label{fig:blurred}
+\end{figure}
+
+\subsection{Colour Filtering}
+
+As many of the false detections are caused in the background of the image where
+the colours are not similar to skin tones a colour filter was implemented to try
+and reduce their occurrence. Using the training data supplied the upper and lower
+bounds for skin tone colours in red, green and blue where found. Any pixel which
+did not fall within these bounds was set to black. It was found that only applying
+the colour filter to the g20 image and not the template caused highest nubmers of
+detections. This achived an overlap of 50\%, which is shown in figure \ref{fig:colourfilt}.
+As can be seen in the figure there are significantly less false detections in the
+background of the image and also more correct detections as a result of reducing
+the search space down to the pixels which are within skin tone ranges.\\
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{colourfilt.jpg}
+  \caption{Results of using Normalised Correlation and Colour Filter on g20 image}
+  \label{fig:colourfilt}
+\end{figure}
+
+\subsection{Edge Detection}
+
+The final improvement on the original normalised correlation technique was using
+edge detection. The idea behind this was to simplfy the image down to just an edge
+detected image this means that the detection is just using the shape of the edges
+in the image as opposed to the colour or grayscale pixel value. It was expected
+that this would reduce the number of false detection is the background as the edges
+here are simple verticle lines which are not similar to those in the tempalate image.
+It was also expected that the number of correct detections would increase as the grey
+scale values are no longer being compared, so skin tone should not be an issue.\\
+
+In order to create an edge detected image the Canny edge detection technique was
+applied. Firstly the Sobel Kernels are applied in two
+convolutions, for the horizontal and vertical. After this the gradients at each pixel
+are computed and are set to the closest of the two diagonals, horizontal and vertical.
+Finally the values are all thresholded to only leave the hard edges.\\
+
+Using the edge detected image an overlap of 34\% was achieved, this is shown in
+figure \ref{fig:edgedet}. As expected the number of false detections in the background
+of the image is reduced compared to the original normalised correlation and there
+are more positive detections.
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{edgedetect.jpg}
+  \caption{Results of using Normalised Correlation and Edge Detection on g20 image}
+  \label{fig:edgedet}
+\end{figure}
+
+\subsection{Harr Features}
+
+The final detection technique which was tried was to move away from using a convolution
+of a template image and to use Harr features like the Viola-Jones algorithm does \ref{viola2004robust}.
+The Viola-Jones algorithm uses a cascade of simple classifiers using a Harr feature
+to detect faces. Therefore the use of a set Harr features to detect an face should yeild
+an improved overlap with the Viola-Jones algorithm.\\
+
+In order to do this a seven Harr Features were used each of a fixed size, these
+were chosen by running all possible sizes of the two, three and four segment Harr
+features over a test set of faces and non faces. The features which gave the highest
+success rate when run on the test set were used in the final implementation. An
+integral image of the target image is created in order to compare the Harr features
+too. Each of the Harr features were used as the template for a convolution across the
+Wintegral image. The average of each pixel in each convolution is calculated giving an
+matrix where high values represent where more of the Harr features matched the image below.
+An example of the output when run on the g20 image is shown in figure \ref{fig:harrfeat},
+as can be seen lighter areas are where faces are in the image. This technique yeilds
+a 49\% overlap with the Viola-Jones algorithm.
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{harrfeat.jpg}
+  \caption{Results of using Harr feature technique on g20 image}
+  \label{fig:harrfeat}
+\end{figure}
 
 \section{Requirement 3}
 
 \section{Requirement 4}
 
-Face Detection
-Normal -
-Normalised Corr - 27.21\%
-Normalised Corr with Guass - 29.31\%
-Normalised Corr with Colour - 50.16\% //Only image colour filtered
-Normalised Corr with edge det - 34.38\% //Only image edge detected
-My VJ - 49.16\%
 
-Face Classification
-
-Nearest Neighborer - 5/18
-SVM's = 4/18
-Naive Bayes = 5/18
+\bibliographystyle{acm}
+\bibliography{report}
 
 \end{document}
-
-
-//Notes
-
-Haar Feature selection
-
-for haar feature 1
-
-11111
-11111
-00000
-00000
-
-Best pos x,y
-Best feat size

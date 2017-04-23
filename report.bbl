@@ -1,0 +1,10 @@
+\begin{thebibliography}{1}
+
+\bibitem{stddev}
+{\sc {Matlab Tricks}}.
+\newblock {Calculate standard deviation using minimal memory}.
+\newblock
+  \url{http://matlabtricks.com/post-19/calculating-standard-deviation-using-minimal-memory},
+  2013.
+
+\end{thebibliography}
