@@ -30,12 +30,12 @@
 
 \section{Requirement 1 : Correlation Detector}
 
-Simple correlation can be performed using a correlation of the template and image,
+Simple correlation can be performed using a template and image,
 all tests in this report used the obama.png as the template image. The results of
 using a simple correlation can be seen in figure \ref{fig:simplecor}. As can be
 seen this results is significant numbers of false positive detections, expecially
-in the flag section above the rows of people. Also many detections only cover half
-of a face.\\
+in the flag section above the rows of people. Also many detections are not successfully
+centered around the face.\\
 
 \begin{figure}[H]
   \includegraphics[width=\linewidth]{simpleCor.jpg}
@@ -47,12 +47,12 @@ To improve this a normalised correlation technique was implemented. The normalis
 is defined in the coursework specification and is shown in figure \ref{fig:normcoreq} for reference.
 This can be simplified in a series of steps to make use of correlations in order to
 improve performance. Firstly the value of $x - m_x1$ can be precomputed as this is
-simple the template minus its mean. Next the numerator of the fraction can be simplified
-to $xy + m_x1m_y1 - xm_y1 - ym_x1$, each of these four terms can then be computed
+simply the template minus its mean. Next the numerator of the fraction can be expanded
+to give $xy + m_x1m_y1 - xm_y1 - ym_x1$, each of these four terms can then be computed
 using a correlation. These four correlations are shown in figure \ref{fig:numerator}
-where tempalate and image are the vectorised image and template and templateMean is
-the mean of the template and imageMean is a matrix of the mean values at each tempalte
-location, computed using another correlation with a template of values 1/1024 where
+where template and image are the vectorised image and template, templateMean is
+the mean of the template and imageMean is a matrix of the mean values at each template
+location. imageMean can be computed using another correlation with a template of values 1/1024 where
 the template size is 32 x 32.\\
 
 \begin{figure}[H]
@@ -76,12 +76,12 @@ XY = filter2(template, image);
 
 Now the numerator of the normalised correlation is computed we can turn to the
 denominator. The denominator of the normalised correlation equation is the
-standard deviation of the tempalte and part of the image under the template \cite{crosscor}.
-The standard deviation of the template can be computed simply. For the part of the
-image under the template correlations can be used. The standard deviation can be
-rearranged to the equation shown in figure \ref{fig:normcoreq} where n is the
+standard deviation of the template multiplied by the standard deviation of the part of the image under the template \cite{crosscor}.
+The standard deviation of the template can be computed using std(). The standard
+deviation of the part of the image under the tempalte is more difficult to compute. The standard deviation can be
+rearranged to the equation shown in figure \ref{fig:stddeveq} where n is the
 number of pixels under the template, q is the squared sum of the pixels under the
-template and s is the sum of the pixels under the tempalte \cite{stddev}. This can
+template and s is the sum of the pixels under the template \cite{stddev}. This can
 be computed using another three correlations to compute n, q and s as shown in
 figure \ref{fig:stddeccode} where the template is of size 32 x 32.\\
 
@@ -90,7 +90,7 @@ figure \ref{fig:stddeccode} where the template is of size 32 x 32.\\
 $r=\frac{1}{n - 1}(q - \frac{s^2}{n})$
 \end{center}
 \caption{Standard Deviation}
-\label{fig:normcoreq}
+\label{fig:stddeveq}
 \end{figure}
 
 \begin{figure}[H]
