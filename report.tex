@@ -107,7 +107,7 @@ imStdDev = (q - ((s .^ 2) ./ n) ./ (n - 1));
 imStdDev = sqrt(imStdDev);
 \end{lstlisting}
 \caption{Standard Deviation matlab}
-\label{fig{fig:stddeccode}}
+\label{fig:stddeccode}
 \end{figure}
 
 Using the normalised correlation the output of the face detection using obama.png
@@ -216,9 +216,86 @@ a 49\% overlap with the Viola-Jones algorithm.
   \label{fig:harrfeat}
 \end{figure}
 
-\section{Requirement 3}
+\section{Requirement 3 : Nearest-Neighbour Classifier}
 
-\section{Requirement 4}
+In order to create a nearest-neighbour style classifier the euclidean distance
+between each of the detected face and the faces in the database are computed.
+Firstly each image in the database and the extracted images has its mean subtracted
+and is divided by its standard deviation in order to normalise lighting conditions.
+The euclidean distance is simply the squared distance between each pixel value
+in two images summed together. For each extracted image the distance between each
+image in the database is computed and the database image with the smallest distance
+is recorded and the class that image belongs to is the person that extraction is
+classified as. The code for this is in the EuclideanClassifier.m file.\\
+
+Using this classifier 5 out of the 18 faces which are extracted by the face detection
+algorithm are correctly classified. This gives an overall success rate of 28\%.
+This is shown in figure \ref{fig:nnc}.
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{euclidean.jpg}
+  \caption{Results of face classification using Nearest-Neighbour Classifier}
+  \label{fig:nnc}
+\end{figure}
+
+\section{Requirement 4 : Improved Classifier}
+
+\subsection{Using SVM and Naive Bayes classifiers}
+
+The first improvement which was tried was to replace the Nearest-Neighbour classifier
+with a different classifier. Two classifiers were tried first a Support Vector Machine
+and then a Naive Bayes classifier. Feature vectors for both classifiers are simply
+vectorised versions of the 32 x 32 images. The SVM approach comprises of a binary SVM for
+each of the classes of image. Each singe classifier returns true or false depending
+on whether the image passed is classified as the class the SVM was trained of.
+Each SVM is trained using all images of the face it is to classify as class True
+and all other faces in the database as class False. Then in order to classify am
+unknown face each SVM is run in turn until one returns true. The Naive Bayes approach
+uses a multi class Naive Bayes trained on the database of images provided.\\
+
+Both of these classifiers produced very similar success rates of 28\% for the SVM
+and 22\% for the Naive Bayes these are no better than the Nearest-Neighbour classifier.
+It was decided to change the features used in the classification next as opposed to
+modifying any of the classifiers parameters.\\
+
+\subsection{Using Eigen Faces}
+
+Eigen faces can be used as a feature for a face classifier. In order to create a
+set of eigen faces from the database firstly the average image is computed, the
+left most image in figure \ref{fig:eigenface}. The eigen faces are then computed
+by eigen value decomposition, each of the training images is placed in a M x N
+matrix where M is the number of images and N there vectorised length. The convolution
+matrix of this is then computed giving a N x N matrix, the eigen vectors of this
+are the eigen faces \ref{fig:eigenface}. Each eigen face is normalised between 0 and 1. The first
+five eigen faces are shown in figure \ref{fig:eigenface}.\\
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{eigenface.jpg}
+  \caption{Average Face and largest Eigen Faces, Left to Right}
+  \label{fig:eigenface}
+\end{figure}
+
+After the eigen faces have been computed then can be used to build feature vectors
+for images. This is done by computing the weights required for each of the eigen
+faces in order to reproduce the image. The weights are created by firstly taking
+the average face away from the target image then computing the dot product
+between each eigen face giving the weight for that eigen face. This gives a vector
+who's length is the same as the number of eigen faces, and can be used as a feature
+vector for face classification.\\
+
+Using a set of training and testing data from the database it was found that the
+optimum eigen faces to use were the 50 largest. It was also found that a Naive Bayes
+classifier yielded the highest success rate. Using a naive bayes classifier trained with
+the weights for each of the images in the database and then run against the faces
+extracted by the Viola-Jones algorithm a success rate of 56% was achieved, which is
+significantly better than the nearest neighbor approach. The results are shown in
+figure \ref{fig:eigenfaces}.
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{eigenfacesrun.jpg}
+  \caption{Results of face classification using Eigen Faces}
+  \label{fig:eigenfaces}
+\end{figure}
 
 
 \bibliographystyle{acm}

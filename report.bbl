@@ -7,4 +7,11 @@
   \url{http://matlabtricks.com/post-19/calculating-standard-deviation-using-minimal-memory},
   2013.
 
+\bibitem{crosscor}
+{\sc {Wikipedia}}.
+\newblock {Normalized cross-correlation}.
+\newblock
+  \url{https://en.wikipedia.org/wiki/Cross-correlation#Normalized_cross-correlation},
+  2017.
+
 \end{thebibliography}

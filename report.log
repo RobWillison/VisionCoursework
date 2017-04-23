@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.2)  23 APR 2017 11:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.2)  23 APR 2017 12:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -210,14 +210,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 46--57
  []
 
 
-Package natbib Warning: Citation `crosscor' on page 1 undefined on input line 7
-9.
-
-
-LaTeX Warning: Reference `fig:stddeccode' on page 1 undefined on input line 86.
-
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 77--87
 
  []
@@ -245,7 +237,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 133--139
 
  []
 
-<blurred.jpg, id=21, 1680.2775pt x 414.54875pt>
+<blurred.jpg, id=20, 1680.2775pt x 414.54875pt>
 File: blurred.jpg Graphic file (type jpg)
  <use blurred.jpg>
 Package pdftex.def Info: blurred.jpg used on input line 141.
@@ -256,7 +248,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 148--158
  []
 
 [3 <./normalisedCor.jpg> <./blurred.jpg>]
-<colourfilt.jpg, id=25, 1680.2775pt x 414.54875pt>
+<colourfilt.jpg, id=24, 1680.2775pt x 414.54875pt>
 File: colourfilt.jpg Graphic file (type jpg)
  <use colourfilt.jpg>
 Package pdftex.def Info: colourfilt.jpg used on input line 160.
@@ -271,7 +263,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 176--181
 
  []
 
-<edgedetect.jpg, id=26, 1680.2775pt x 414.54875pt>
+<edgedetect.jpg, id=25, 1680.2775pt x 414.54875pt>
 File: edgedetect.jpg Graphic file (type jpg)
  <use edgedetect.jpg>
 Package pdftex.def Info: edgedetect.jpg used on input line 188.
@@ -287,15 +279,54 @@ Underfull \hbox (badness 10000) in paragraph at lines 195--200
 
  []
 
-
-LaTeX Warning: Reference `fig:harrfeat' on page 5 undefined on input line 209.
-
-<harrfeat.jpg, id=30, 1680.2775pt x 414.54875pt>
+<harrfeat.jpg, id=29, 1680.2775pt x 414.54875pt>
 File: harrfeat.jpg Graphic file (type jpg)
  <use harrfeat.jpg>
-Package pdftex.def Info: harrfeat.jpg used on input line 212.
+Package pdftex.def Info: harrfeat.jpg used on input line 214.
 (pdftex.def)             Requested size: 345.0pt x 85.11588pt.
- [5 <./edgedetect.jpg> <./harrfeat.jpg>] (./report.bbl
+
+Underfull \hbox (badness 10000) in paragraph at lines 221--230
+
+ []
+
+[5 <./edgedetect.jpg> <./harrfeat.jpg>]
+<euclidean.jpg, id=34, 1680.2775pt x 414.54875pt>
+File: euclidean.jpg Graphic file (type jpg)
+ <use euclidean.jpg>
+Package pdftex.def Info: euclidean.jpg used on input line 236.
+(pdftex.def)             Requested size: 345.0pt x 85.11588pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 245--255
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 256--260
+
+ []
+
+[6 <./euclidean.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 263--271
+
+ []
+
+<eigenface.jpg, id=38, 392.46625pt x 81.30376pt>
+File: eigenface.jpg Graphic file (type jpg)
+ <use eigenface.jpg>
+Package pdftex.def Info: eigenface.jpg used on input line 273.
+(pdftex.def)             Requested size: 345.0pt x 71.47556pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 278--285
+
+ []
+
+<eigenfacesrun.jpg, id=39, 1680.2775pt x 414.54875pt>
+File: eigenfacesrun.jpg Graphic file (type jpg)
+ <use eigenfacesrun.jpg>
+Package pdftex.def Info: eigenfacesrun.jpg used on input line 295.
+(pdftex.def)             Requested size: 345.0pt x 85.11588pt.
+
+[7 <./eigenface.jpg>] (./report.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 4--9
 []\OT1/cmr/m/sc/10 Matlab Tricks\OT1/cmr/m/n/10 .  Cal-cu-late stan-dard de-vi-
 a-tion us-ing
@@ -307,11 +338,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--9
  com / post-[]19 /
  []
 
-)
-
-Package natbib Warning: There were undefined citations.
-
-[6] (./report.aux)
+) [8 <./eigenfacesrun.jpg>] (./report.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -320,10 +347,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3871 strings out of 494942
- 53123 string characters out of 6180501
- 170898 words of memory out of 5000000
- 7134 multiletter control sequences out of 15000+600000
+ 3890 strings out of 494942
+ 53452 string characters out of 6180501
+ 170869 words of memory out of 5000000
+ 7150 multiletter control sequences out of 15000+600000
  5627 words of font info for 21 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  38i,6n,40p,235b,1558s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -339,10 +366,10 @@ amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 sy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pf
 b>
-Output written on report.pdf (6 pages, 697219 bytes).
+Output written on report.pdf (8 pages, 919176 bytes).
 PDF statistics:
- 77 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 88 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
